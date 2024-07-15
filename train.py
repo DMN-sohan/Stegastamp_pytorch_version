@@ -142,7 +142,7 @@ def main():
                       f'ETA = {int(eta_h)}h {int(eta_m)}m {int(eta_s)}s ({eta_str})', flush=True)
 
             # Get checkpoints:
-            if global_step % CHECKPOINT_MARK_1 == 0:
+            if global_step % 100 == 0:
                 torch.save(encoder, os.path.join(args.saved_models, "encoder.pth"))
                 torch.save(decoder, os.path.join(args.saved_models, "decoder.pth"))
 
