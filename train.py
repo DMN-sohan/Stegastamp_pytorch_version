@@ -14,6 +14,11 @@ from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
 import lpips
 
+
+import time
+import datetime
+import pytz
+
 CHECKPOINT_MARK_1 = 10_000
 CHECKPOINT_MARK_2 = 1500
 IMAGE_SIZE = 400
@@ -27,7 +32,7 @@ def infoMessage0(string):
     print(f'[-----]: {string}')
 
 infoMessage0('opening settings file')
-with open('cfg/setting.yaml', 'r') as f:
+with open(',/cfg/setting.yaml', 'r') as f:
     args = EasyDict(yaml.load(f, Loader=yaml.SafeLoader))
 
 if not os.path.exists(args.checkpoints_path):
@@ -75,6 +80,7 @@ def main():
     total_steps = len(dataset) // args.batch_size + 1
     global_step = 0
 
+    start_time = time.time()
     while global_step < args.num_steps:
         for _ in range(min(total_steps, args.num_steps - global_step)):
             image_input, secret_input = next(iter(dataloader))
@@ -116,10 +122,24 @@ def main():
                     optimize_dis.zero_grad()
                     optimize_dis.step()
 
-            print('{:g}: Loss = {:.4f}'.format(global_step, loss))
+            
             if global_step % 10 == 0:
                 writer.add_scalars('Loss values', {'loss': loss.item(), 'secret loss': secret_loss.item(),
                                                    'D_loss loss': D_loss.item()})
+                                                   
+            if global_step % 100 == 0:
+                elapsed_time = time.time() - start_time
+                steps_remaining = args.num_steps - global_step
+                time_per_step = elapsed_time / global_step
+                eta_seconds = steps_remaining * time_per_step
+                eta = datetime.datetime.now(pytz.timezone('Asia/Kolkata')) + datetime.timedelta(seconds=eta_seconds)
+                eta_str = eta.strftime('%Y-%m-%d %H:%M:%S %Z')
+                eta_h, eta_m = divmod(eta_seconds, 3600)
+                eta_m, eta_s = divmod(eta_m, 60)
+
+                print(f'Iter #{global_step}: Loss = {loss:.4f}, secret loss = {secret_loss:.4f}, D_loss = {D_loss:.4f}, '
+                      f'bit_acc = {bit_acc:.4f}, str_acc = {str_acc:.4f}, Time Taken = {elapsed_time:.2f}s, '
+                      f'ETA = {int(eta_h)}h {int(eta_m)}m {int(eta_s)}s ({eta_str})', flush=True)
 
             # Get checkpoints:
             if global_step % CHECKPOINT_MARK_1 == 0:
