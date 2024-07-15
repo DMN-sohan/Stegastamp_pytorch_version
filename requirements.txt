@@ -1,15 +1,51 @@
-bchlib==1.0.0
-easydict==1.10
-kornia==0.7.0
-lpips==0.1.4
+requests
+setuptools
+h5py
+h5py-cache
+tqdm
+pandas
+Pillow
+matplotlib
 
-matplotlib==3.4.3
+tensorboard
+tensorboardx
+scikit-learn
+scikit-image
+slackclient
+reportlab
+scipy
+ImageHash
+wandb
 
-numpy==1.20.3
+joblib
+augly
+ffmpeg-python
+ipython
 
-Pillow==10.0.0
+streamlit
+easydict
+protobuf
+albumentations
+opencv-python
+pudb
+imageio
+imageio-ffmpeg
+omegaconf
+einops
+bchlib
 
-PyYAML==6.0.1
-torch==1.10.2
-torchgeometry==0.1.2
-torchvision==0.11.3
+## pytorch-related lib
+diffusers
+lpips
+torchsummary
+invisible-watermark
+torch-fidelity
+torchgeometry
+torchmetrics
+pytorch-fid
+
+test-tube
+kornia
+transformers
+pytorch-lightning
+-e git+https://github.com/openai/CLIP.git@main#egg=clip
