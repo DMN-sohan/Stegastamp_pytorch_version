@@ -82,9 +82,10 @@ def main():
     total_steps = len(dataset) // args.batch_size + 1
     global_step = 0
 
-    start_time = time.time()
+    
     while global_step < args.num_steps:
-        for _ in range(min(total_steps, args.num_steps - global_step)):
+        for _ in range(complete_steps := min(total_steps, args.num_steps - global_step)):
+            start_time = time.time()
             image_input, secret_input = next(iter(dataloader))
             if args.cuda:
                 image_input = image_input.cuda()
@@ -139,7 +140,7 @@ def main():
                 eta_h, eta_m = divmod(eta_seconds, 3600)
                 eta_m, eta_s = divmod(eta_m, 60)
 
-                print(f'Iter #{global_step}: Loss = {loss:.4f}, secret loss = {secret_loss:.4f}, D_loss = {D_loss:.4f}, '
+                print(f'Iter #{global_step}/{complete_steps}: Loss = {loss:.4f}, secret loss = {secret_loss:.4f}, D_loss = {D_loss:.4f}, '
                       f'bit_acc = {bit_acc:.4f}, str_acc = {str_acc:.4f}, Time Taken = {elapsed_time:.2f}s, '
                       f'ETA = {int(eta_h)}h {int(eta_m)}m {int(eta_s)}s ({eta_str})', flush=True)
 
