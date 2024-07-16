@@ -43,7 +43,7 @@ torch-fidelity
 torchgeometry
 torchmetrics
 pytorch-fid
-unet
+
 test-tube
 kornia
 transformers
