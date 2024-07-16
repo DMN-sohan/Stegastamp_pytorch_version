@@ -82,10 +82,10 @@ def main():
     total_steps = len(dataset) // args.batch_size + 1
     global_step = 0
 
-    
+    start_time = time.time()
     while global_step < args.num_steps:
         for _ in range(complete_steps := min(total_steps, args.num_steps - global_step)):
-            start_time = time.time()
+            
             image_input, secret_input = next(iter(dataloader))
             if args.cuda:
                 image_input = image_input.cuda()
