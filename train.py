@@ -21,8 +21,8 @@ import time
 import datetime
 import pytz
 
-CHECKPOINT_MARK_1 = 10_000
-CHECKPOINT_MARK_2 = 1500
+CHECKPOINT_MARK_1 = 120_000
+CHECKPOINT_MARK_2 = 120_000
 IMAGE_SIZE = 400
 
 print("\n\n---------------------->")
