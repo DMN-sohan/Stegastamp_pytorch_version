@@ -9,7 +9,7 @@ cuda: True
 
 exp_name: "StegaStamp_PyTorch"
 secret_size: 100
-num_steps: 130_000
+num_steps: 70_000
 batch_size: 4
 lr: 0.0001
 l2_loss_scale: 2
