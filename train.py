@@ -32,7 +32,7 @@ def infoMessage0(string):
     print(f'[-----]: {string}')
 
 infoMessage0('opening settings file')
-with open(',/cfg/setting.yaml', 'r') as f:
+with open('./cfg/setting.yaml', 'r') as f:
     args = EasyDict(yaml.load(f, Loader=yaml.SafeLoader))
 
 if not os.path.exists(args.checkpoints_path):
