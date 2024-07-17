@@ -278,7 +278,7 @@ def transform_net(encoded_image, args, global_step):
     if args.cuda:
         noise = noise.cuda()
     encoded_image = encoded_image + noise
-    encoded_image = torch.clamp(encoded_image, -0.5, +0.5)
+    encoded_image = torch.clamp(encoded_image, -0.5, 0.5)
 
     # contrast & brightness
     contrast_scale = torch.Tensor(encoded_image.size()[0]).uniform_(contrast_params[0], contrast_params[1])
@@ -288,7 +288,7 @@ def transform_net(encoded_image, args, global_step):
         rnd_brightness = rnd_brightness.cuda()
     encoded_image = encoded_image * contrast_scale
     encoded_image = encoded_image + rnd_brightness
-    encoded_image = torch.clamp(encoded_image, -0.5, +0.5)
+    encoded_image = torch.clamp(encoded_image, -0.5, 0.5)
 
     # saturation
     sat_weight = torch.FloatTensor([.3, .6, .1]).reshape(1, 3, 1, 1)
@@ -439,7 +439,7 @@ def build_model(encoder, decoder, discriminator, lpips_fn, secret_input, image_i
     if global_step % 20 == 0:
         writer.add_image('input/image_input', image_input[0], global_step)
         writer.add_image('input/image_warped', input_warped[0], global_step)
-        writer.add_image('encoded/encoded_warped', torch.clamp(encoded_warped[0], min=-0.5, max=+0.5), global_step)
+        writer.add_image('encoded/encoded_warped', torch.clamp(encoded_warped[0], min=-0.5, max=0.5), global_step)
         writer.add_image('encoded/residual_warped', residual_warped[0] + 0.5, global_step)
         writer.add_image('encoded/encoded_image', torch.clamp(encoded_image[0], min=-0.5, max=0.5), global_step)
         writer.add_image('transformed/transformed_image', transformed_image[0], global_step)
