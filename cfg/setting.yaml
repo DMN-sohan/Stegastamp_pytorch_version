@@ -56,4 +56,4 @@ no_im_loss_steps: 1500
 pretrained: None
 min_loss: 1_000 # set high value so it won't be saved.
 min_secret_loss: 1_000 # set high value so it won't be saved.
-seed: 0
+seed: 1
