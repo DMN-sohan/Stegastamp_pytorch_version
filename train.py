@@ -52,9 +52,15 @@ def main():
     dataset = StegaData(args.train_path, args.secret_size, size=(IMAGE_SIZE, IMAGE_SIZE))
     dataloader = DataLoader(dataset, batch_size=args.batch_size, shuffle=True, pin_memory=True)
 
-    # encoder = model.StegaStampEncoder()   8.1.2023
-    encoder = model.StegaStampEncoder()
-    decoder = model.StegaStampDecoder(secret_size=args.secret_size)
+    if args.pretrained:
+        infoMessage0('Loading pretrained models')
+        encoder = torch.load(args.pretrained_encoder)
+        decoder = torch.load(args.pretrained_decoder)
+    else:
+        infoMessage0('Initializing new models')
+        encoder = model.StegaStampEncoder()
+        decoder = model.StegaStampDecoder(secret_size=args.secret_size)
+
     discriminator = model.Discriminator()
     lpips_alex = lpips.LPIPS(net="alex", verbose=False)
     if args.cuda:
