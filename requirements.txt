@@ -8,3 +8,6 @@ easydict
 lpips
 opencv-python
 pyyaml
+matplotlib
+albumentations
+tqdm

@@ -10,7 +10,7 @@ from kornia import color
 import torch.nn.functional as F
 import warnings
 warnings.filterwarnings('ignore')
-import unet_parts as UNet
+import kan_unet as UNet
 from torchvision import transforms
 
 
